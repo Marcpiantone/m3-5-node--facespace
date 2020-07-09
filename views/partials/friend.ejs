@@ -1,0 +1,8 @@
+<li>
+    <div class = "friend">
+        <% const friend = users.find((user) => {%>
+            <% return user._id === friendId });%>
+                <img src="<%-friend.avatarUrl %>" alt="<%-friend.name %> picture">
+            <p><%- `${friend.name}`%></p>
+    </div>
+    </li>

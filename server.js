@@ -18,6 +18,27 @@ const handleHomepage = (req, res) => {
   res.status(200).render("./pages/homepage", { users: users });
 };
 
+const handleProfilePage = (req, res) => {
+  // Few functions at 1st
+  const id = req.params.id;
+
+  const getUserByid = () => {
+    const user = users.find((user) => {
+      return user._id === id;
+    });
+    return user;
+  };
+
+  let user = getUserByid(id);
+
+  if (user !== undefined) {
+    res.status(200).render("./pages/profile", { user, users });
+  } else {
+    console.log("User doesn't exist");
+    res.status(404).send("The user you're looking for doesn't exist yet");
+  }
+};
+
 // -----------------------------------------------------
 // server endpoints
 express()
@@ -29,6 +50,8 @@ express()
   // endpoints
 
   .get("/", handleHomepage)
+
+  .get("/users/:id", handleProfilePage)
 
   // a catchall endpoint that will send the 404 message.
   .get("*", handleFourOhFour)
