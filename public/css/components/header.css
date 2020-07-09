@@ -20,6 +20,11 @@
   color: #fff;
   margin-top: 4px;
 }
+
+.header p a:hover {
+  color: rgb(139, 157, 195);
+}
+
 .signin-button {
   background: var(--primary-color);
   border: 2px solid var(--primary-color);
@@ -45,4 +50,8 @@
   font-size: 40px;
   color: #fff;
   margin-top: 4px;
+}
+
+.site-title:hover {
+  color: rgb(139, 157, 195);
 }
