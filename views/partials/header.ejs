@@ -11,6 +11,7 @@
       <% if(currentUser.name === undefined) {%> 
       <a class="signin-button" href="/signin">Sign in</a>
       <% } else { %> 
-        <p>Howdy, <%= currentUser.name %> </p>
+        <p>Howdy, 
+          <a href="<%-`/users/${currentUser._id} `%>"><%= currentUser.name %> </a></p>
       <% } %> 
   </header>
