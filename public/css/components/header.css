@@ -31,3 +31,10 @@
   color: var(--primary-color);
   cursor: pointer;
 }
+.site-title {
+  text-decoration: none;
+  font-family: Teko;
+  font-size: 30px;
+  color: #fff;
+  margin-top: 4px;
+}

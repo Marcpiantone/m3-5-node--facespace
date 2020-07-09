@@ -2,10 +2,28 @@
 <div class="home-page"></div>
 <h2>All Facespace members</h2>
 <ul class="homepage__all">
+  <% if (currentUser.friends !== undefined) {%> 
     <% users.forEach(user => { %>
+      <% if (currentUser.friends.includes(user._id)){%> 
     <li class="homepage__all--user">
-      <img src="<%= user.avatarUrl %>" />
+      <a href="<%-`http://localhost:8000/users/${user._id} `%>">
+        <img src="<%= user.avatarUrl %>"/></a>
+        <span class = "ribbon">My friend</span> 
     </li>
+  <% } else {%> 
+    <li class="homepage__all--user">
+      <a href="<%-`http://localhost:8000/users/${user._id} `%>">
+        <img src="<%= user.avatarUrl %>"/></a> 
+    </li>
+  <% } %> 
     <% }) %>
+    <% } else {%>
+      <% users.forEach(user => { %>
+      <li class="homepage__all--user">
+        <a href="<%-`http://localhost:8000/users/${user._id} `%>">
+          <img src="<%= user.avatarUrl %>"/></a>
+      </li>
+      <% }) %>
+      <% } %> 
   </ul>
 <%- include('../partials/footer') %>

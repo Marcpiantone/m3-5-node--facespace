@@ -14,10 +14,12 @@ const handleFourOhFour = (req, res) => {
 
 // declare the other handle functions
 
+//HOMEPAGE
 const handleHomepage = (req, res) => {
-  res.status(200).render("./pages/homepage", { users: users });
+  res.status(200).render("pages/homepage", { users: users, currentUser });
 };
 
+//PROFILEPAGE
 const handleProfilePage = (req, res) => {
   // Few functions at 1st
   const id = req.params.id;
@@ -29,13 +31,49 @@ const handleProfilePage = (req, res) => {
     return user;
   };
 
-  let user = getUserByid(id);
+  //Response
+  let user = getUserByid();
 
   if (user !== undefined) {
-    res.status(200).render("./pages/profile", { user, users });
+    res.status(200).render("./pages/profile", { user, users, currentUser });
   } else {
     console.log("User doesn't exist");
-    res.status(404).send("The user you're looking for doesn't exist yet");
+    res.status(404).redirect("/*");
+  }
+};
+
+//SIGNIN PAGE
+const handleSignin = (req, res) => {
+  if (currentUser.name === undefined) {
+    res.status(200).render("./pages/signin", { currentUser });
+  } else {
+    let user = currentUser;
+    res.status(200).render("./pages/profile", { user, users, currentUser });
+  }
+};
+
+//SIGNIN POST
+
+const handleName = (req, res) => {
+  //Few functions first
+  const firstName = req.body.firstName;
+
+  const getUserbyName = () => {
+    const user = users.find((user) => {
+      return user.name === firstName;
+    });
+    return user;
+  };
+
+  //Response
+  let user = getUserbyName();
+  currentUser = { ...user };
+
+  if (user !== undefined) {
+    res.status(200).render("./pages/profile", { user, users, currentUser });
+  } else {
+    console.log("User doesn't exist");
+    res.status(404).redirect("/signin");
   }
 };
 
@@ -52,6 +90,10 @@ express()
   .get("/", handleHomepage)
 
   .get("/users/:id", handleProfilePage)
+
+  .get("/signin", handleSignin)
+
+  .post("/getname", handleName)
 
   // a catchall endpoint that will send the 404 message.
   .get("*", handleFourOhFour)
